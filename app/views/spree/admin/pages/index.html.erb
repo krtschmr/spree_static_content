@@ -9,13 +9,15 @@
 <% if @pages.any? %>
   <table class="table" id="listing_pages" data-hook>
     <colgroup>
-      <col style="width: 40%">
+      <col style="width: 10%">
+      <col style="width: 30%">
       <col style="width: 35%">
       <col style="width: 10%">
       <col style="width: 15%">
     </colgroup>
     <thead>
       <tr data-hook="admin_pages_index_headers">
+        <th><%= Spree::Page.human_attribute_name(:store) %></th>
         <th><%= Spree::Page.human_attribute_name(:title) %></th>
         <th><%= Spree.t(:link, scope: :static_content) %></th>
         <th class="text-center"><%= Spree::Page.human_attribute_name(:visible) %></th>
@@ -25,6 +27,7 @@
     <tbody>
       <% @pages.each do |page| %>
         <tr data-hook="admin_pages_index_rows" class="<%= cycle('odd', 'even') %>" id="<%= dom_id page %>">
+          <td><%= page.stores.pluck(:name).join(",") %></td>
           <td><%= page.title %></td>
           <td><%= link_to page.link, page.link, target: '_blank' %></td>
           <td class="text-center"><%= content_tag(:i, '', class: 'icon icon-ok') if page.visible %></td>
